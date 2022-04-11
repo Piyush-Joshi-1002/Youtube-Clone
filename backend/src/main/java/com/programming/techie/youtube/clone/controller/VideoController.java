@@ -1,28 +1,44 @@
 package com.programming.techie.youtube.clone.controller;
-//-Dcloud.aws.credentials.access-key=AKIAVKFCLI6JKJXJ3F72 -Dcloud.aws.credentials.secret-key=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
+import com.programming.techie.youtube.clone.dto.UploadVideoResponse;
+import com.programming.techie.youtube.clone.dto.VideoDto;
 import com.programming.techie.youtube.clone.service.VideoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 @RestController
+@RequestMapping("api/videos")
 @RequiredArgsConstructor
 public class VideoController {
 
     private final VideoService videoService;
 
 
-    @GetMapping("api/videos")
+    @GetMapping
     public String vidoes(){
-        String s = "This is fine ";
+        String s = "This is fine W";
         return s;
     }
 
-    @PostMapping("api/videos")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public void uploadVideo(@RequestParam("file") MultipartFile file){
-        videoService.uploadVideo(file);
+    public UploadVideoResponse uploadVideo(@RequestParam("file") MultipartFile file){
+        return videoService.uploadVideo(file);
     }
+    @PostMapping("/thumbnail")
+    @ResponseStatus(HttpStatus.CREATED)
+    public String uploadThubnail(@RequestParam("file") MultipartFile file, @RequestParam("videoId") String videoId){
 
+        return videoService.uploadThumbnail(file,videoId);
+    }
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto editVideoMetadata(@RequestBody VideoDto videoDto){
+       return videoService.editVideo(videoDto);
+    }
+    @GetMapping("/{videoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public  VideoDto getVideoDetails(@PathVariable String videoId){
+        return videoService.getVideoDetails(videoId);
+    }
 }

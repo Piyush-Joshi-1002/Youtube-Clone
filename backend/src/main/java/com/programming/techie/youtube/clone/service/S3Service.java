@@ -22,8 +22,7 @@ public class S3Service implements FileService {
     @Override
     public String uploadFile(MultipartFile file)  {
         //Upload the file to aws s3
-        // Prepare a unique key
-        
+        // Prepare a unique key jfkajljf.png dfkla_Z._fkjlaj_.mp4
         var filenameExtension =StringUtils.getFilenameExtension(file.getOriginalFilename());
         var key = UUID.randomUUID().toString() +"."+ filenameExtension;
         var metadata = new ObjectMetadata();
